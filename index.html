@@ -1,338 +1,321 @@
 <!DOCTYPE html>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html lang="ja">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>みみみみずいろ | MIMIMI RECORD</title>
+  
+  <!-- 8bit風フォント (Press Start 2P) & サイバー感のあるフォント (Orbitron, Noto Sans JP) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Orbitron:wght@600;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       RESET & BASE STYLES
+       ========================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-color: #08090f;
+      --card-bg: rgba(16, 20, 31, 0.85);
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff0055;
+      --neon-green: #39ff14;
+      --text-main: #e2f1f8;
+      --text-dim: #8ba2b5;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Noto Sans JP', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      /* 背景にサイバーグリッドラインを配置 */
+      background-image: 
+        linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    /* レトロCRT（ブラウン管）風の走査線エフェクト */
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    /* ==========================================
+       HERO / HEADER SECTION
+       ========================================== */
+    header {
+      text-align: center;
+      padding: 60px 0 40px;
+    }
+
+    /* 8bitネオンバッジ */
+    .badge {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.75rem;
+      color: var(--neon-green);
+      border: 2px solid var(--neon-green);
+      padding: 6px 14px;
+      display: inline-block;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+      letter-spacing: 1px;
+    }
+
+    /* サイバーパンク・グリッチ見出し */
+    .title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 
+        0 0 5px var(--neon-cyan),
+        0 0 15px var(--neon-cyan),
+        0 0 30px var(--neon-cyan);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      font-family: 'Orbitron', 'Press Start 2P', sans-serif;
+      font-size: 1.1rem;
+      color: var(--neon-pink);
+      text-shadow: 0 0 8px var(--neon-pink);
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+    }
+
+    .catchphrase {
+      background: var(--card-bg);
+      border: 1px solid rgba(0, 243, 255, 0.3);
+      border-left: 4px solid var(--neon-cyan);
+      padding: 20px;
+      border-radius: 4px;
+      max-width: 650px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+      text-align: left;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .catchphrase p + p {
+      margin-top: 10px;
+    }
+
+    .highlight {
+      color: var(--neon-cyan);
+      font-weight: bold;
+    }
+
+    /* ==========================================
+       SECTION COMMON STYLES
+       ========================================== */
+    section {
+      margin-top: 50px;
+    }
+
+    .section-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.2rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: ">";
+      color: var(--neon-pink);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 25px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    /* ==========================================
+       MUSIC & PLAYER SECTION
+       ========================================== */
+    .player-wrapper {
+      margin-bottom: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 243, 255, 0.2);
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    /* 8bit風ネオンボタン */
+    .pixel-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      background-color: transparent;
+      color: var(--neon-cyan);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.75rem;
+      border: 2px solid var(--neon-cyan);
+      box-shadow: 4px 4px 0px var(--neon-cyan);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+
+    .pixel-btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--neon-cyan);
+      background-color: rgba(0, 243, 255, 0.1);
+      color: #fff;
+    }
+
+    .pixel-btn.pink {
+      color: var(--neon-pink);
+      border-color: var(--neon-pink);
+      box-shadow: 4px 4px 0px var(--neon-pink);
+    }
+
+    .pixel-btn.pink:hover {
+      box-shadow: 2px 2px 0px var(--neon-pink);
+      background-color: rgba(255, 0, 85, 0.1);
+    }
+
+    /* ==========================================
+       PROFILE & LINKS SECTION
+       ========================================== */
+    .profile-text {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+    }
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 600px) {
+      .title { font-size: 2rem; }
+      .subtitle { font-size: 0.9rem; }
+      .container { padding: 10px 15px 60px; }
+    }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="ja"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;みみみみずいろ | MIMIMI RECORD&lt;/title&gt;</p>
-<p class="p2"><span class="Apple-converted-space">  </span></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- 8bit風フォント (Press Start 2P) &amp; サイバー感のあるフォント (Orbitron, Noto Sans JP) --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;family=Orbitron:wght@600;900&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* ==========================================</p>
-<p class="p1"><span class="Apple-converted-space">       </span>RESET &amp; BASE STYLES</p>
-<p class="p1"><span class="Apple-converted-space">       </span>========================================== */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>* {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-sizing: border-box;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>:root {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--bg-color: #08090f;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--card-bg: rgba(16, 20, 31, 0.85);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--neon-cyan: #00f3ff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--neon-pink: #ff0055;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--neon-green: #39ff14;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--text-main: #e2f1f8;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--text-dim: #8ba2b5;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: var(--bg-color);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--text-main);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Noto Sans JP', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>line-height: 1.6;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>overflow-x: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>/* 背景にサイバーグリッドラインを配置 */</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-image:<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px),</p>
-<p class="p1"><span class="Apple-converted-space">        </span>linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-size: 30px 30px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* レトロCRT（ブラウン管）風の走査線エフェクト */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body::before {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>content: " ";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>position: fixed;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>top: 0; left: 0; bottom: 0; right: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-size: 100% 4px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>z-index: 999;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>pointer-events: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opacity: 0.6;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>a {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: inherit;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-decoration: none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 900px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px 20px 80px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* ==========================================</p>
-<p class="p1"><span class="Apple-converted-space">       </span>HERO / HEADER SECTION</p>
-<p class="p1"><span class="Apple-converted-space">       </span>========================================== */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>header {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 60px 0 40px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* 8bitネオンバッジ */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.badge {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Press Start 2P', monospace;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--neon-green);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 2px solid var(--neon-green);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 6px 14px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: inline-block;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>letter-spacing: 1px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* サイバーパンク・グリッチ見出し */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.title {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 2.8rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: 900;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #fff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-shadow:<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>0 0 5px var(--neon-cyan),</p>
-<p class="p1"><span class="Apple-converted-space">        </span>0 0 15px var(--neon-cyan),</p>
-<p class="p1"><span class="Apple-converted-space">        </span>0 0 30px var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>letter-spacing: 2px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.subtitle {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Orbitron', 'Press Start 2P', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 1.1rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--neon-pink);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-shadow: 0 0 8px var(--neon-pink);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>letter-spacing: 3px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.catchphrase {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: var(--card-bg);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid rgba(0, 243, 255, 0.3);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-left: 4px solid var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 650px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 0.95rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: left;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 10px 30px rgba(0,0,0,0.5);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.catchphrase p + p {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.highlight {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* ==========================================</p>
-<p class="p1"><span class="Apple-converted-space">       </span>SECTION COMMON STYLES</p>
-<p class="p1"><span class="Apple-converted-space">       </span>========================================== */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>section {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 50px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section-title {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Press Start 2P', monospace;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 1.2rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-shadow: 0 0 8px var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section-title::before {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>content: "&gt;";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--neon-pink);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.card {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: var(--card-bg);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid rgba(255, 255, 255, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 25px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>backdrop-filter: blur(5px);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 20px rgba(0,0,0,0.4);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* ==========================================</p>
-<p class="p1"><span class="Apple-converted-space">       </span>MUSIC &amp; PLAYER SECTION</p>
-<p class="p1"><span class="Apple-converted-space">       </span>========================================== */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.player-wrapper {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid rgba(0, 243, 255, 0.2);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.download-grid {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: grid;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* 8bit風ネオンボタン */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pixel-btn {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: inline-flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 12px 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: transparent;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Press Start 2P', monospace;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 0.75rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 2px solid var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 4px 4px 0px var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: all 0.15s ease;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pixel-btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transform: translate(2px, 2px);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 2px 2px 0px var(--neon-cyan);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: rgba(0, 243, 255, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #fff;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pixel-btn.pink {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--neon-pink);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-color: var(--neon-pink);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 4px 4px 0px var(--neon-pink);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.pixel-btn.pink:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 2px 2px 0px var(--neon-pink);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background-color: rgba(255, 0, 85, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* ==========================================</p>
-<p class="p1"><span class="Apple-converted-space">       </span>PROFILE &amp; LINKS SECTION</p>
-<p class="p1"><span class="Apple-converted-space">       </span>========================================== */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.profile-text {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 0.95rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--text-dim);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.links-grid {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: grid;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* ==========================================</p>
-<p class="p1"><span class="Apple-converted-space">       </span>FOOTER</p>
-<p class="p1"><span class="Apple-converted-space">       </span>========================================== */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>footer {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 80px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Press Start 2P', monospace;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 0.65rem;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: var(--text-dim);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* レスポンシブ対応 */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@media (max-width: 600px) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.title { font-size: 2rem; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.subtitle { font-size: 0.9rem; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.container { padding: 10px 15px 60px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="container"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- HEADER --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;header&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="badge"&gt;SYSTEM : ONLINE&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1 class="title"&gt;みみみみずいろ&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="subtitle"&gt;MIMIMI RECORD&lt;/p&gt;</p>
-<p class="p2"><span class="Apple-converted-space">      </span></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="catchphrase"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;⚡ &lt;span class="highlight"&gt;全力で遊びをする無法者&lt;/span&gt;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;大阪から世界に羽ばたかないように、足枷をつけて活動するクリエイター集団（1人）。&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- MUSIC SECTION --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="music"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 class="section-title"&gt;MUSIC &amp; TRACKS&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-dim);"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>試聴プレイヤー（YouTube / SoundCloud等のコードを埋め込み可能）</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- 試聴プレイヤーのダミー（ここにYouTubeやSoundCloudのiframeを入れる） --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="player-wrapper"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&amp;color=%2300f3ff&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true"&gt;&lt;/iframe&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p style="margin-top: 25px; margin-bottom: 15px; font-weight: bold;"&gt;FREE DOWNLOAD / AUDIO&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="download-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;a href="#" class="pixel-btn"&gt;TRACK_01.MP3 [DL]&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;a href="#" class="pixel-btn"&gt;TRACK_02.MP3 [DL]&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- ABOUT SECTION --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="about"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 class="section-title"&gt;ABOUT&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="profile-text"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>ここはみみみの音楽や作品をダウンロード・試聴できるように統合されたサイバー拠点です。&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>音源配布、各種リンク、今後の無法な活動内容を随時アップデートしていきます。</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- LINKS SECTION --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;section id="links"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2 class="section-title"&gt;OFFICIAL LINKS&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="links-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;a href="https://twitter.com" target="_blank" rel="noopener" class="pixel-btn pink"&gt;X (TWITTER)&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;a href="https://youtube.com" target="_blank" rel="noopener" class="pixel-btn pink"&gt;YOUTUBE&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;a href="https://soundcloud.com" target="_blank" rel="noopener" class="pixel-btn pink"&gt;SOUNDCLOUD&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- FOOTER --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;&amp;copy; MIMIMI RECORD ALL RIGHTS RESERVED.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+  <div class="container">
+    
+    <!-- HEADER -->
+    <header>
+      <div class="badge">SYSTEM : ONLINE</div>
+      <h1 class="title">みみみみずいろ</h1>
+      <p class="subtitle">MIMIMI RECORD</p>
+      
+      <div class="catchphrase">
+        <p>⚡ <span class="highlight">全力で遊びをする無法者</span></p>
+        <p>大阪から世界に羽ばたかないように、足枷をつけて活動するクリエイター集団（1人）。</p>
+      </div>
+    </header>
+
+    <!-- MUSIC SECTION -->
+    <section id="music">
+      <h2 class="section-title">MUSIC & TRACKS</h2>
+      <div class="card">
+        <p style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-dim);">
+          試聴プレイヤー（YouTube / SoundCloud等のコードを埋め込み可能）
+        </p>
+
+        <!-- 試聴プレイヤーのダミー（ここにYouTubeやSoundCloudのiframeを入れる） -->
+        <div class="player-wrapper">
+          <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&color=%2300f3ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+        </div>
+
+        <p style="margin-top: 25px; margin-bottom: 15px; font-weight: bold;">FREE DOWNLOAD / AUDIO</p>
+        <div class="download-grid">
+          <a href="#" class="pixel-btn">TRACK_01.MP3 [DL]</a>
+          <a href="#" class="pixel-btn">TRACK_02.MP3 [DL]</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+      <h2 class="section-title">ABOUT</h2>
+      <div class="card">
+        <p class="profile-text">
+          ここはみみみの音楽や作品をダウンロード・試聴できるように統合されたサイバー拠点です。<br>
+          音源配布、各種リンク、今後の無法な活動内容を随時アップデートしていきます。
+        </p>
+      </div>
+    </section>
+
+    <!-- LINKS SECTION -->
+    <section id="links">
+      <h2 class="section-title">OFFICIAL LINKS</h2>
+      <div class="card">
+        <div class="links-grid">
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="pixel-btn pink">X (TWITTER)</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" class="pixel-btn pink">YOUTUBE</a>
+          <a href="https://soundcloud.com" target="_blank" rel="noopener" class="pixel-btn pink">SOUNDCLOUD</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>&copy; MIMIMI RECORD ALL RIGHTS RESERVED.</p>
+    </footer>
+
+  </div>
+
 </body>
 </html>
