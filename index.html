@@ -4,6 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>みみみみずいろ | MIMIMI RECORD</title>
+
+  <!-- 同時接続数バッジのHTML -->
+<div id="live-viewer-count" class="live-viewer-badge">
+  <span class="live-dot"></span>
+  <span>同時接続: <strong id="viewer-number">--</strong>人</span>
+</div>
+
+<!-- スタイル（CSS） -->
+<style>
+  .live-viewer-badge {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background-color: rgba(20, 20, 20, 0.85);
+    color: #ffffff;
+    font-size: 13px;
+    font-family: sans-serif;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    pointer-events: none; /* ページ操作の邪魔にならないようクリックを透過 */
+    user-select: none;
+  }
+
+  /* 配信中のような点滅ドット演出 */
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ff3b30;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.7; }
+  }
+</style>
+
+<!-- ランダム表示スクリプト（JavaScript） -->
+<script>
+  (function() {
+    const viewerElement = document.getElementById('viewer-number');
+
+    // 10人以上のランダムな数値を生成（例: 10〜85人）
+    function getRandomViewers(min = 10, max = 85) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // 初回表示
+    let currentCount = getRandomViewers();
+    viewerElement.textContent = currentCount;
+
+    // 数秒ごとに±1〜3人の範囲で自然に増減させる
+    setInterval(() => {
+      const diff = Math.floor(Math.random() * 7) - 3; // -3 〜 +3
+      currentCount = Math.max(10, currentCount + diff); // 10人未満にはならないように制限
+      viewerElement.textContent = currentCount;
+    }, 4000);
+  })();
+</script>
   
   <!-- 8bit風フォント & サイバー感のあるフォント -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
