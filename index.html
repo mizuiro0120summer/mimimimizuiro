@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>みみみ　みずいろ | MIMIMI RECORD</title>
+  <title>みみみみずいろ | MIMIMI RECORD</title>
   
   <!-- 8bit風フォント & サイバー感のあるフォント -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,7 +68,7 @@
     }
 
     /* ==========================================
-       CYBER LOADING SCREEN (NEW!)
+       CYBER LOADING SCREEN
        ========================================== */
     #loader-wrapper {
       position: fixed;
@@ -94,7 +94,7 @@
 
     .loader-box {
       width: 90%;
-      max-width: 460px;
+      max-width: 480px;
       padding: 30px 20px;
       border: 2px solid var(--neon-cyan);
       box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(0, 243, 255, 0.15);
@@ -114,7 +114,7 @@
     .loader-log {
       color: var(--text-dim);
       font-size: 0.65rem;
-      height: 50px;
+      height: 52px;
       margin-bottom: 20px;
       line-height: 1.6;
       overflow: hidden;
@@ -134,7 +134,7 @@
       width: 0%;
       background-color: var(--neon-pink);
       box-shadow: 0 0 10px var(--neon-pink);
-      transition: width 0.1s linear;
+      transition: width 0.08s linear;
     }
 
     .loader-status {
@@ -402,14 +402,14 @@
       </div>
       <div class="loader-log" id="loader-log">
         > SYSTEM CHECK OK<br>
-        > CONNECTING SERVER...
+        > INITIALIZING CORE...
       </div>
       <div class="loader-bar-bg">
         <div class="loader-bar-fill" id="loader-progress"></div>
       </div>
       <div class="loader-status">
-        <span>STATUS: ACTIVE</span>
-        <span id="loader-percent">00%</span>
+        <span id="loader-status-text">STATUS: ACTIVE</span>
+        <span id="loader-percent">00.0%</span>
       </div>
     </div>
   </div>
@@ -484,42 +484,89 @@
 
   <!-- スクリプト群 -->
   <script>
-    // --- CYBER LOADER LOGIC ---
+    // --- 3.0% / 33.4% / 99.9% 停止ギミック付き CYBER LOADER ---
     window.addEventListener('DOMContentLoaded', () => {
       const progressBar = document.getElementById('loader-progress');
       const percentText = document.getElementById('loader-percent');
       const logText = document.getElementById('loader-log');
+      const statusText = document.getElementById('loader-status-text');
       const loaderWrapper = document.getElementById('loader-wrapper');
 
-      let progress = 0;
-      const logs = [
-        '> SYSTEM CHECK OK<br>> LOADING AUDIO ENGINE...',
-        '> SYNCING MIMIMI RECORD...<br>> PREPARING SOUNDS...',
-        '> CYBERSPACE CONNECTED<br>> BOOT COMPLETE.'
-      ];
+      // 前半の停止ターゲット（3.0% または 33.4% をランダム選択）
+      const firstStall = Math.random() < 0.5 ? 3.0 : 33.4;
+      let hasFirstStalled = false;
+      let hasFinalStalled = false;
+      let progress = 0.0;
 
-      const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 12) + 6;
-        if (progress > 100) progress = 100;
+      function render(val) {
+        progressBar.style.width = val + '%';
+        percentText.textContent = (val < 10 ? '0' : '') + val.toFixed(1) + '%';
+      }
 
-        progressBar.style.width = progress + '%';
-        percentText.textContent = (progress < 10 ? '0' : '') + progress + '%';
+      function step() {
+        // 1. 前半の停止判定（3.0% または 33.4%）
+        if (!hasFirstStalled && progress < firstStall) {
+          progress = firstStall;
+          render(progress);
+          hasFirstStalled = true;
 
-        if (progress > 30 && progress < 70) {
-          logText.innerHTML = logs[0];
-        } else if (progress >= 70 && progress < 95) {
-          logText.innerHTML = logs[1];
-        } else if (progress >= 95) {
-          logText.innerHTML = logs[2];
-        }
+          statusText.style.color = '#ffe600';
+          statusText.textContent = 'STATUS: STALLED';
+          logText.innerHTML = `> ACCESSING SECTOR [${firstStall}%]...<br><span style="color:#ff0055;">>> STALL DETECTED... BYPASSING LOCK</span>`;
 
-        if (progress >= 100) {
-          clearInterval(interval);
           setTimeout(() => {
-            loaderWrapper.classList.add('loaded');
-          }, 350);
+            statusText.style.color = '#39ff14';
+            statusText.textContent = 'STATUS: OVERRIDE OK';
+            logText.innerHTML = '> LOCK BYPASS SUCCESSFUL.<br>> RESUMING BOOT SEQUENCE...';
+            setTimeout(() => {
+              progress += 4.5;
+              step();
+            }, 350);
+          }, 3000); // 3秒停止
+          return;
         }
-      }, 50);
+
+        // 2. 終盤の停止判定（99.9%）
+        if (hasFirstStalled && !hasFinalStalled && progress >= 99.0 && progress < 100.0) {
+          progress = 99.9;
+          render(progress);
+          hasFinalStalled = true;
+
+          statusText.style.color = '#ffe600';
+          statusText.textContent = 'STATUS: FINALIZING';
+          logText.innerHTML = '> SYNCHRONIZING WITH AUDIO CORE...<br><span style="color:#00f3ff;">>> FINALIZING DATA STREAM...</span>';
+
+          setTimeout(() => {
+            progress = 100.0;
+            render(progress);
+            statusText.style.color = '#39ff14';
+            statusText.textContent = 'STATUS: COMPLETE';
+            logText.innerHTML = '> CYBERSPACE CONNECTED.<br>> BOOT COMPLETE.';
+
+            setTimeout(() => {
+              loaderWrapper.classList.add('loaded');
+            }, 400);
+          }, 2500); // 99.9%で約2.5秒焦らす
+          return;
+        }
+
+        // 通常の進行処理
+        if (!hasFinalStalled) {
+          progress += Math.random() * 8.5 + 4.0;
+          if (progress > 99.0) progress = 99.0; // 一旦99%手前で止めて99.9%の判定へ回す
+
+          render(progress);
+
+          if (progress >= 60.0 && progress < 90.0) {
+            logText.innerHTML = '> SYNCING MIMIMI RECORD...<br>> PREPARING SOUND TRACKS...';
+          }
+
+          setTimeout(step, 45);
+        }
+      }
+
+      // 初動スタート
+      setTimeout(step, 100);
 
       // --- SCROLL REVEAL OBSERVER ---
       const observer = new IntersectionObserver((entries) => {
