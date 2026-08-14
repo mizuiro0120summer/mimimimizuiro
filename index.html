@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>みみみみずいろ | MIMIMI RECORD</title>
   
-  <!-- 8bit風フォント (Press Start 2P) & サイバー感のあるフォント (Orbitron, Noto Sans JP) -->
+  <!-- 8bit風フォント & サイバー感のあるフォント -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Orbitron:wght@600;900&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -21,11 +21,12 @@
     }
 
     :root {
-      --bg-color: #08090f;
-      --card-bg: rgba(16, 20, 31, 0.85);
+      --bg-color: #06070c;
+      --card-bg: rgba(13, 17, 27, 0.85);
       --neon-cyan: #00f3ff;
       --neon-pink: #ff0055;
       --neon-green: #39ff14;
+      --neon-yellow: #ffe600;
       --text-main: #e2f1f8;
       --text-dim: #8ba2b5;
     }
@@ -36,24 +37,30 @@
       font-family: 'Noto Sans JP', sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
-      /* 背景にサイバーグリッドラインを配置 */
+      /* 背景グリッドのアニメーション */
       background-image: 
-        linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px);
-      background-size: 30px 30px;
+        linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
+      animation: gridPulse 8s ease-in-out infinite alternate;
     }
 
-    /* レトロCRT（ブラウン管）風の走査線エフェクト */
+    @keyframes gridPulse {
+      0% { background-position: 0 0; }
+      100% { background-position: 16px 16px; }
+    }
+
+    /* レトロCRT走査線エフェクト */
     body::before {
       content: " ";
       display: block;
       position: fixed;
       top: 0; left: 0; bottom: 0; right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
       background-size: 100% 4px;
       z-index: 999;
       pointer-events: none;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
     a {
@@ -72,9 +79,331 @@
        ========================================== */
     header {
       text-align: center;
-      padding: 60px 0 40px;
+      padding: 70px 0 40px;
     }
 
+    /* 8bitネオンステータス（点滅） */
+    .badge {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.75rem;
+      color: var(--neon-green);
+      border: 2px solid var(--neon-green);
+      padding: 6px 14px;
+      display: inline-block;
+      margin-bottom: 25px;
+      box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+      animation: blinkBadge 2s infinite;
+    }
+
+    @keyframes blinkBadge {
+      0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(57, 255, 20, 0.6); }
+      50% { opacity: 0.5; box-shadow: 0 0 4px rgba(57, 255, 20, 0.2); }
+    }
+
+    /* サイバーパンク・グリッチ見出し */
+    .glitch-title {
+      position: relative;
+      font-size: 3rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 
+        0 0 5px var(--neon-cyan),
+        0 0 15px var(--neon-cyan),
+        0 0 30px var(--neon-cyan);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      display: inline-block;
+    }
+
+    .glitch-title::before,
+    .glitch-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      clip: rect(0, 0, 0, 0);
+    }
+
+    .glitch-title::before {
+      left: -2px;
+      text-shadow: 2px 0 var(--neon-pink);
+      animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+    }
+
+    .glitch-title::after {
+      left: 2px;
+      text-shadow: -2px 0 var(--neon-green);
+      animation: glitch-anim-2 2s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim-1 {
+      0% { clip: rect(20px, 9999px, 40px, 0); }
+      20% { clip: rect(60px, 9999px, 80px, 0); }
+      40% { clip: rect(10px, 9999px, 30px, 0); }
+      60% { clip: rect(80px, 9999px, 100px, 0); }
+      80% { clip: rect(40px, 9999px, 60px, 0); }
+      100% { clip: rect(0, 9999px, 20px, 0); }
+    }
+
+    @keyframes glitch-anim-2 {
+      0% { clip: rect(70px, 9999px, 90px, 0); }
+      25% { clip: rect(10px, 9999px, 25px, 0); }
+      50% { clip: rect(45px, 9999px, 65px, 0); }
+      75% { clip: rect(85px, 9999px, 105px, 0); }
+      100% { clip: rect(30px, 9999px, 50px, 0); }
+    }
+
+    .subtitle {
+      font-family: 'Orbitron', 'Press Start 2P', sans-serif;
+      font-size: 1.1rem;
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink);
+      margin-bottom: 30px;
+      letter-spacing: 4px;
+    }
+
+    .catchphrase {
+      background: var(--card-bg);
+      border: 1px solid rgba(0, 243, 255, 0.3);
+      border-left: 5px solid var(--neon-cyan);
+      padding: 24px;
+      border-radius: 4px;
+      max-width: 650px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+      text-align: left;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .catchphrase:hover {
+      transform: translateY(-2px);
+      border-color: var(--neon-pink);
+      box-shadow: 0 12px 35px rgba(255, 0, 85, 0.2);
+    }
+
+    .catchphrase p + p {
+      margin-top: 10px;
+    }
+
+    .highlight {
+      color: var(--neon-cyan);
+      font-weight: bold;
+    }
+
+    /* ==========================================
+       SECTION & SCROLL ANIMATIONS
+       ========================================== */
+    .reveal-section {
+      margin-top: 60px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: ">";
+      color: var(--neon-pink);
+      animation: promptBlink 1s infinite;
+    }
+
+    @keyframes promptBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 30px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    /* ==========================================
+       BUTTONS & LINKS
+       ========================================== */
+    .download-grid, .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .pixel-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 20px;
+      background: rgba(0, 0, 0, 0.4);
+      color: var(--neon-cyan);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.75rem;
+      border: 2px solid var(--neon-cyan);
+      box-shadow: 4px 4px 0px var(--neon-cyan);
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s;
+      text-align: center;
+      user-select: none;
+    }
+
+    .pixel-btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--neon-cyan);
+      background-color: rgba(0, 243, 255, 0.15);
+      color: #fff;
+    }
+
+    .pixel-btn:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px var(--neon-cyan);
+    }
+
+    .pixel-btn.pink {
+      color: var(--neon-pink);
+      border-color: var(--neon-pink);
+      box-shadow: 4px 4px 0px var(--neon-pink);
+    }
+
+    .pixel-btn.pink:hover {
+      box-shadow: 2px 2px 0px var(--neon-pink);
+      background-color: rgba(255, 0, 85, 0.15);
+    }
+
+    .pixel-btn.pink:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px var(--neon-pink);
+    }
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    footer {
+      text-align: center;
+      margin-top: 90px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 600px) {
+      .glitch-title { font-size: 2.1rem; }
+      .subtitle { font-size: 0.9rem; }
+      .container { padding: 10px 15px 60px; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- HEADER -->
+    <header>
+      <div class="badge">SYSTEM : ACTIVE</div>
+      <br>
+      <h1 class="glitch-title" data-text="みみみみずいろ">みみみみずいろ</h1>
+      <p class="subtitle">MIMIMI RECORD</p>
+      
+      <div class="catchphrase">
+        <p>⚡ <span class="highlight">全力で遊びをする無法者</span></p>
+        <p>大阪から世界に羽ばたかないように、足枷をつけて活動するクリエイター集団（1人）。</p>
+      </div>
+    </header>
+
+    <!-- MUSIC SECTION -->
+    <section id="music" class="reveal-section">
+      <h2 class="section-title">MUSIC & TRACKS</h2>
+      <div class="card">
+        <p style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-dim);">
+          FEATURED TRACK / STREAMING
+        </p>
+
+        <!-- SoundCloud / YouTube埋め込み枠 -->
+        <div style="border-radius: 6px; overflow: hidden; border: 1px solid rgba(0, 243, 255, 0.3);">
+          <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&color=%2300f3ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+        </div>
+
+        <p style="margin-top: 30px; margin-bottom: 15px; font-weight: bold; font-family: 'Press Start 2P', monospace; font-size: 0.8rem; color: var(--neon-cyan);">
+          FREE DOWNLOAD
+        </p>
+        <div class="download-grid">
+          <a href="#" class="pixel-btn">TRACK_01.MP3 [DL]</a>
+          <a href="#" class="pixel-btn">TRACK_02.MP3 [DL]</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="reveal-section">
+      <h2 class="section-title">ABOUT</h2>
+      <div class="card">
+        <p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.8;">
+          ここはみみみの音楽や作品をダウンロード・試聴できるように統合されたサイバー拠点です。<br>
+          音源配布、各種リンク、今後の無法な活動内容を随時アップデートしていきます。
+        </p>
+      </div>
+    </section>
+
+    <!-- LINKS SECTION -->
+    <section id="links" class="reveal-section">
+      <h2 class="section-title">OFFICIAL LINKS</h2>
+      <div class="card">
+        <div class="links-grid">
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="pixel-btn pink">X (TWITTER)</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" class="pixel-btn pink">YOUTUBE</a>
+          <a href="https://soundcloud.com" target="_blank" rel="noopener" class="pixel-btn pink">SOUNDCLOUD</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>&copy; MIMIMI RECORD ALL RIGHTS RESERVED.</p>
+    </footer>
+
+  </div>
+
+  <!-- スクロール検知スクリプト（モダン演出用） -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      document.querySelectorAll('.reveal-section').forEach((section) => {
+        observer.observe(section);
+      });
+    });
+  </script>
+
+</body>
+</html>
     /* 8bitネオンバッジ */
     .badge {
       font-family: 'Press Start 2P', monospace;
