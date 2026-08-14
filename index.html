@@ -4,78 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>みみみみずいろ | MIMIMI RECORD</title>
-
-  <!-- 同時接続数バッジのHTML -->
-<div id="live-viewer-count" class="live-viewer-badge">
-  <span class="live-dot"></span>
-  <span>同時接続: <strong id="viewer-number">--</strong>人</span>
-</div>
-
-<!-- スタイル（CSS） -->
-<style>
-  .live-viewer-badge {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
-    background-color: rgba(20, 20, 20, 0.85);
-    color: #ffffff;
-    font-size: 13px;
-    font-family: sans-serif;
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(4px);
-    pointer-events: none; /* ページ操作の邪魔にならないようクリックを透過 */
-    user-select: none;
-  }
-
-  /* 配信中のような点滅ドット演出 */
-  .live-dot {
-    width: 8px;
-    height: 8px;
-    background-color: #ff3b30;
-    border-radius: 50%;
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0% { transform: scale(0.95); opacity: 0.7; }
-    50% { transform: scale(1.15); opacity: 1; }
-    100% { transform: scale(0.95); opacity: 0.7; }
-  }
-</style>
-
-<!-- ランダム表示スクリプト（JavaScript） -->
-<script>
-  (function() {
-    const viewerElement = document.getElementById('viewer-number');
-
-    // 10人以上のランダムな数値を生成（例: 10〜85人）
-    function getRandomViewers(min = 10, max = 85) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    // 初回表示
-    let currentCount = getRandomViewers();
-    viewerElement.textContent = currentCount;
-
-    // 数秒ごとに±1〜3人の範囲で自然に増減させる
-    setInterval(() => {
-      const diff = Math.floor(Math.random() * 7) - 3; // -3 〜 +3
-      currentCount = Math.max(10, currentCount + diff); // 10人未満にはならないように制限
-      viewerElement.textContent = currentCount;
-    }, 4000);
-  })();
-</script>
   
+  <!-- ファビコン（タブのアイコン） -->
+  <link rel="icon" href="logo.png" type="image/png">
+
   <!-- 8bit風フォント & サイバー感のあるフォント -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Orbitron:wght@600;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- アイコンライブラリ (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     /* ==========================================
@@ -132,6 +71,45 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    /* ==========================================
+       左上固定: 同時接続数バッジ
+       ========================================== */
+    .live-viewer-badge {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background-color: rgba(6, 7, 12, 0.85);
+      border: 1px solid var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+      color: var(--text-main);
+      font-size: 0.7rem;
+      font-family: 'Press Start 2P', monospace;
+      border-radius: 4px;
+      backdrop-filter: blur(5px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--neon-pink);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--neon-pink);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.6; }
     }
 
     /* ==========================================
@@ -213,7 +191,7 @@
     }
 
     /* ==========================================
-       MAIN CONTENT CONTAINER
+       MAIN CONTENT & HEADER
        ========================================== */
     .container {
       max-width: 900px;
@@ -221,9 +199,6 @@
       padding: 20px 20px 80px;
     }
 
-    /* ==========================================
-       HERO / HEADER SECTION
-       ========================================== */
     header {
       text-align: center;
       padding: 70px 0 40px;
@@ -236,7 +211,7 @@
       border: 2px solid var(--neon-green);
       padding: 6px 14px;
       display: inline-block;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
       animation: blinkBadge 2s infinite;
     }
@@ -244,6 +219,25 @@
     @keyframes blinkBadge {
       0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(57, 255, 20, 0.6); }
       50% { opacity: 0.5; box-shadow: 0 0 4px rgba(57, 255, 20, 0.2); }
+    }
+
+    /* ドット絵ロゴのスタイル */
+    .site-logo {
+      width: 105px;
+      height: 105px;
+      margin: 0 auto 20px;
+      display: block;
+      image-rendering: pixelated;
+      background-color: #fff;
+      border-radius: 50%;
+      padding: 4px;
+      box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 10px rgba(0, 243, 255, 0.5);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    }
+
+    .site-logo:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 0 30px var(--neon-pink), inset 0 0 15px rgba(255, 0, 85, 0.5);
     }
 
     .glitch-title {
@@ -339,7 +333,7 @@
     }
 
     /* ==========================================
-       SECTION & SCROLL ANIMATIONS
+       SECTION & CARDS
        ========================================== */
     .reveal-section {
       margin-top: 60px;
@@ -361,7 +355,7 @@
       margin-bottom: 20px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .section-title::before {
@@ -398,6 +392,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 10px;
       padding: 14px 20px;
       background: rgba(0, 0, 0, 0.4);
       color: var(--neon-cyan);
@@ -455,12 +450,19 @@
       .subtitle { font-size: 0.9rem; }
       .container { padding: 10px 15px 60px; }
       .card { padding: 20px; }
+      .live-viewer-badge { font-size: 0.6rem; padding: 4px 10px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ==================== CYBER LOADER ==================== -->
+  <!-- 左上固定: 同時接続数表示 -->
+  <div class="live-viewer-badge">
+    <span class="live-dot"></span>
+    <span>LIVE: <span id="viewer-number" style="color:var(--neon-green);">--</span></span>
+  </div>
+
+  <!-- CYBER LOADER -->
   <div id="loader-wrapper">
     <div class="loader-box">
       <div class="loader-title">
@@ -487,6 +489,10 @@
     <header>
       <div class="badge">SYSTEM : ACTIVE</div>
       <br>
+      
+      <!-- ドット絵ロゴ -->
+      <img src="logo.png" alt="みみみ ロゴ" class="site-logo">
+      
       <h1 class="glitch-title" data-text="みみみみずいろ">みみみみずいろ</h1>
       <p class="subtitle">MIMIMI RECORD</p>
       
@@ -498,7 +504,7 @@
 
     <!-- MUSIC SECTION -->
     <section id="music" class="reveal-section">
-      <h2 class="section-title">MUSIC & TRACKS</h2>
+      <h2 class="section-title"><i class="fa-solid fa-headphones"></i> MUSIC & TRACKS</h2>
       <div class="card">
         <p style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-dim);">
           FEATURED TRACK / STREAMING
@@ -513,15 +519,15 @@
           FREE DOWNLOAD
         </p>
         <div class="download-grid">
-          <a href="#" class="pixel-btn">TRACK_01.MP3 [DL]</a>
-          <a href="#" class="pixel-btn">TRACK_02.MP3 [DL]</a>
+          <a href="#" class="pixel-btn"><i class="fa-solid fa-download"></i> TRACK_01.MP3</a>
+          <a href="#" class="pixel-btn"><i class="fa-solid fa-download"></i> TRACK_02.MP3</a>
         </div>
       </div>
     </section>
 
     <!-- ABOUT SECTION -->
     <section id="about" class="reveal-section">
-      <h2 class="section-title">ABOUT</h2>
+      <h2 class="section-title"><i class="fa-solid fa-terminal"></i> ABOUT</h2>
       <div class="card">
         <p style="font-size: 0.95rem; color: var(--text-dim); line-height: 1.8;">
           ここはみみみの音楽や作品をダウンロード・試聴できるように統合されたサイバー拠点です。<br>
@@ -532,12 +538,12 @@
 
     <!-- LINKS SECTION -->
     <section id="links" class="reveal-section">
-      <h2 class="section-title">OFFICIAL LINKS</h2>
+      <h2 class="section-title"><i class="fa-solid fa-network-wired"></i> OFFICIAL LINKS</h2>
       <div class="card">
         <div class="links-grid">
-          <a href="https://twitter.com" target="_blank" rel="noopener" class="pixel-btn pink">X (TWITTER)</a>
-          <a href="https://youtube.com" target="_blank" rel="noopener" class="pixel-btn pink">YOUTUBE</a>
-          <a href="https://soundcloud.com" target="_blank" rel="noopener" class="pixel-btn pink">SOUNDCLOUD</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="pixel-btn pink"><i class="fa-brands fa-x-twitter"></i> X (TWITTER)</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" class="pixel-btn pink"><i class="fa-brands fa-youtube"></i> YOUTUBE</a>
+          <a href="https://soundcloud.com" target="_blank" rel="noopener" class="pixel-btn pink"><i class="fa-brands fa-soundcloud"></i> SOUNDCLOUD</a>
         </div>
       </div>
     </section>
@@ -551,7 +557,20 @@
 
   <!-- スクリプト群 -->
   <script>
-    // --- 3.0% / 33.4% / 99.9% 停止ギミック付き CYBER LOADER ---
+    // --- 1. 同時接続数ランダム変動ロジック (10人以上) ---
+    (function() {
+      const viewerElement = document.getElementById('viewer-number');
+      let count = Math.floor(Math.random() * (45 - 12 + 1)) + 12; // 初期値: 12〜45人
+      viewerElement.textContent = count;
+
+      setInterval(() => {
+        const diff = Math.floor(Math.random() * 5) - 2; // -2 〜 +2
+        count = Math.max(10, count + diff); // 10人未満にならないように制限
+        viewerElement.textContent = count;
+      }, 3500);
+    })();
+
+    // --- 2. 3.0% / 33.4% / 99.9% 停止ギミック付き CYBER LOADER ---
     window.addEventListener('DOMContentLoaded', () => {
       const progressBar = document.getElementById('loader-progress');
       const percentText = document.getElementById('loader-percent');
@@ -571,7 +590,7 @@
       }
 
       function step() {
-        // 1. 前半の停止判定（3.0% または 33.4%）
+        // 前半の停止
         if (!hasFirstStalled && progress < firstStall) {
           progress = firstStall;
           render(progress);
@@ -593,7 +612,7 @@
           return;
         }
 
-        // 2. 終盤の停止判定（99.9%）
+        // 終盤の停止（99.9%）
         if (hasFirstStalled && !hasFinalStalled && progress >= 99.0 && progress < 100.0) {
           progress = 99.9;
           render(progress);
@@ -617,10 +636,10 @@
           return;
         }
 
-        // 通常の進行処理
+        // 通常進行
         if (!hasFinalStalled) {
           progress += Math.random() * 8.5 + 4.0;
-          if (progress > 99.0) progress = 99.0; // 一旦99%手前で止めて99.9%の判定へ回す
+          if (progress > 99.0) progress = 99.0;
 
           render(progress);
 
@@ -632,10 +651,9 @@
         }
       }
 
-      // 初動スタート
       setTimeout(step, 100);
 
-      // --- SCROLL REVEAL OBSERVER ---
+      // --- 3. スクロール検知アニメーション ---
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
